@@ -1,0 +1,129 @@
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* choose one: gradient or image */
+  /* background: linear-gradient(135deg, #6b6bff, #b8b8ff); */
+  background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?...') center/cover no-repeat;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-navbar {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 12px 24px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.dashboard-navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.dashboard-navbar li {
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.795); /* subtle background for contrast */
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+
+
+
+
+.dashboard-navbar li:hover {
+  background-color: rgba(11, 5, 69, 0.306);
+}
+
+
+
+
+
+.dashboard-navbar .delete-link {
+  color: #ff6b6b;
+}
+
+/* .dashboard-navbar .logout-link {
+  /* color: #fff; 
+} */
+
+
+
+.dashboard-container::before {
+  content: "";
+  flex: 1;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 90px;
+}
+
+.welcome-section {
+  background-color: rgba(255,255,255,0.9);
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.welcome-section h1 {
+  margin-bottom: 10px;
+  font-size: 2.2rem;
+  color: #333;
+}
+
+.welcome-section p {
+  margin-bottom: 25px;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.match-btn {
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.match-btn:hover {
+  background-color: #0056b3;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .welcome-section {
+    padding: 30px 20px;
+  }
+  .welcome-section h1 {
+    font-size: 1.8rem;
+  }
+  .match-btn {
+    width: 100%;
+    font-size: 1rem;
+  }
+}

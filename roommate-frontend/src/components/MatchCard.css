@@ -1,0 +1,52 @@
+.match-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  width: 100%;
+  max-width: 300px;
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.match-card:hover {
+  transform: translateY(-5px);
+}
+
+.match-details h3 {
+  font-size: 20px;
+  color: #1e90ff;
+  margin-bottom: 10px;
+}
+
+.match-details p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.contact-btn-wrapper {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.contact-btn {
+  background-color: #1e90ff;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #0d76d8;
+}
+
+.contact-info {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #444;
+}

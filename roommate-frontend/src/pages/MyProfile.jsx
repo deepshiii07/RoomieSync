@@ -12,7 +12,9 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/api/preferences/${userId}`);
+        const response = await axios.get(
+          `https://roommate-backend-production.up.railway.app/api/preferences/${userId}`
+        );
         setProfile(response.data);
       } catch (err) {
         console.error("Error fetching profile data:", err);

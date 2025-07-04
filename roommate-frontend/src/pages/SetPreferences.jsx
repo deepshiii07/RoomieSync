@@ -20,7 +20,7 @@ const SetPreferences = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/api/preferences/${userId}`)
+      .get(`https://roommate-backend-production.up.railway.app/api/preferences/${userId}`)
       .then((res) => {
         if (res.data) setFormData(res.data);
       })
@@ -35,7 +35,10 @@ const SetPreferences = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8081/api/preferences/${userId}`, formData);
+      await axios.post(
+        `https://roommate-backend-production.up.railway.app/api/preferences/${userId}`,
+        formData
+      );
       setMessage("Preferences saved successfully ✅");
     } catch (error) {
       setMessage("Failed to save preferences ❌");

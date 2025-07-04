@@ -16,7 +16,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/api/users/${userId}`)
+      .get(`https://roommate-backend-production.up.railway.app/api/users/${userId}`)
       .then((res) => {
         const user = res.data;
         setFormData({
@@ -40,7 +40,7 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:8081/api/users/${userId}`, formData)
+      .put(`https://roommate-backend-production.up.railway.app/api/users/${userId}`, formData)
       .then(() => {
         setMessage("Profile updated successfully ✅");
       })

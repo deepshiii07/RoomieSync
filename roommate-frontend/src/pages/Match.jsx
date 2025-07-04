@@ -11,7 +11,9 @@ const Match = () => {
     const fetchMatches = async () => {
       try {
         const userId = localStorage.getItem("userId");
-        const response = await axios.get(`http://localhost:8081/api/users/match/${userId}`);
+        const response = await axios.get(
+          `https://roommate-backend-production.up.railway.app/api/users/match/${userId}`
+        );
         setMatches(response.data);
       } catch (error) {
         console.error("Error fetching matches:", error);

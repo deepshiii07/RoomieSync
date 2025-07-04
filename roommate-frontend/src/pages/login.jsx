@@ -20,7 +20,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8081/api/users/login", formData);
+      const res = await axios.post(
+        "https://roommate-backend-production.up.railway.app/api/users/login",
+        formData
+      );
       localStorage.setItem("userId", res.data.id);
       setMessage("Login successful! ✅ Redirecting...");
       setTimeout(() => navigate("/dashboard"), 1500);

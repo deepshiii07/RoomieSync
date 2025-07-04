@@ -39,7 +39,10 @@ const Register = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:8081/api/users/register", userData);
+      const res = await axios.post(
+        "https://roommate-backend-production.up.railway.app/api/users/register",
+        userData
+      );
       setMessage("Registration successful! ✅");
 
       setTimeout(() => {
@@ -81,12 +84,11 @@ const Register = () => {
         <button type="submit" className="register-button">Register</button>
         <p className="register-message">{message}</p>
         <p className="login-redirect">
-        Already have an account?{" "}
-        <span onClick={() => navigate("/login")} className="login-link">
-        Login now
-        </span>
+          Already have an account?{" "}
+          <span onClick={() => navigate("/login")} className="login-link">
+            Login now
+          </span>
         </p>
-
       </form>
     </div>
   );

@@ -28,7 +28,7 @@ const Dashboard = () => {
 
               try {
                 const userId = localStorage.getItem("userId");
-                await fetch(`http://localhost:8081/api/users/${userId}`, {
+                await fetch(`https://roommate-backend-production.up.railway.app/api/users/${userId}`, {
                   method: "DELETE"
                 });
                 localStorage.removeItem("userId");

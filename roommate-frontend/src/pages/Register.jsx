@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import { useNavigate } from "react-router-dom";
 import "./Register.css"; // 🔗 Link the new CSS
 
@@ -40,7 +41,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        "https://roommate-backend-production.up.railway.app/api/users/register",
+        `${API_BASE_URL}/api/users/register`,
         userData
       );
       setMessage("Registration successful! ✅");

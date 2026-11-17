@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import Navbar from "../components/Navbar";
 import "./EditProfile.css";
 
@@ -16,7 +17,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`https://roommate-backend-production.up.railway.app/api/users/${userId}`)
+      .get(`${API_BASE_URL}/api/users/${userId}`)
       .then((res) => {
         const user = res.data;
         setFormData({
@@ -40,7 +41,7 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`https://roommate-backend-production.up.railway.app/api/users/${userId}`, formData)
+      .put(`${API_BASE_URL}/api/users/${userId}`, formData)
       .then(() => {
         setMessage("Profile updated successfully ✅");
       })

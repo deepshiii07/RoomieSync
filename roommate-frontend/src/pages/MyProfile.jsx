@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import Navbar from "../components/Navbar";
 import "./MyProfile.css";
 
@@ -13,7 +14,7 @@ const MyProfile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          `https://roommate-backend-production.up.railway.app/api/preferences/${userId}`
+          `${API_BASE_URL}/api/preferences/${userId}`
         );
         setProfile(response.data);
       } catch (err) {

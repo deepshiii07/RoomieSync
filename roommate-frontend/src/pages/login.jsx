@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; // import CSS file
 
@@ -21,7 +22,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://roommate-backend-production.up.railway.app/api/users/login",
+        `${API_BASE_URL}/api/users/login`,
         formData
       );
       localStorage.setItem("userId", res.data.id);

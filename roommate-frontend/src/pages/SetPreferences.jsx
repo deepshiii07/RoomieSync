@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import Navbar from "../components/Navbar";
 import "./SetPreferences.css";
 
@@ -20,7 +21,7 @@ const SetPreferences = () => {
 
   useEffect(() => {
     axios
-      .get(`https://roommate-backend-production.up.railway.app/api/preferences/${userId}`)
+      .get(`${API_BASE_URL}/api/preferences/${userId}`)
       .then((res) => {
         if (res.data) setFormData(res.data);
       })
@@ -36,7 +37,7 @@ const SetPreferences = () => {
     e.preventDefault();
     try {
       await axios.post(
-        `https://roommate-backend-production.up.railway.app/api/preferences/${userId}`,
+        `${API_BASE_URL}/api/preferences/${userId}`,
         formData
       );
       setMessage("Preferences saved successfully ✅");

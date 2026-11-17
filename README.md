@@ -1,99 +1,106 @@
-# 🏡 RoomieSync
+# RoomieSync
 
-**Created by: Deepshikha Bhardwaj**
+RoomieSync is a roommate-matching application for college students. The project has a React/Vite frontend and a separate Spring Boot backend.
 
-RoomieSync is a web-based roommate matching platform designed for college students. It simplifies the process of finding compatible roommates based on preferences like location, gender, academic year, lifestyle habits, and more. Built with a strong Java + Spring Boot backend and a modern React frontend, RoomieSync offers a clean user experience and strong backend logic.
+## Project repositories
 
----
+- Frontend: https://github.com/deepshiii07/RoomieSync
+- Backend: https://github.com/deepshiii07/roommate-backend
 
-## 🚀 Features
+## Requirements
 
-- 📝 User Registration & Login
-- 🧑‍🎓 Profile Editing (Name, Email, Phone, Academic Year, etc.)
-- 🌍 Set Roommate Preferences (smoking, drinking, bedtime, etc.)
-- 💡 Match Roommates based on mutual preferences
-- 📄 View Detailed Roommate Profiles
-- ❌ Delete Account functionality
-- 🔒 Secure form validation and proper routing
-- 📱 Fully responsive and clean UI
+- Node.js 20.19+ or 22.12+
+- Java 17
+- Maven 3.6.3+ (or use the Maven wrapper if one is added later)
+- Docker Desktop with Docker Compose, or a local MySQL 8 server
 
----
+## 1. Clone both repositories
 
-## 🧱 Tech Stack
+Keep the frontend and backend in sibling folders:
 
-### 🖥 Frontend:
-- **React.js** with React Router
-- Axios for API calls
-- CSS modules for styling
+```bash
+git clone -b local-setup https://github.com/deepshiii07/RoomieSync.git
+git clone -b local-setup https://github.com/deepshiii07/roommate-backend.git
+```
 
-### ⚙️ Backend:
-- **Java 17**
-- **Spring Boot 3.x**
-- Spring Data JPA (Hibernate)
-- RESTful API architecture
-- MySQL for database
+## 2. Start MySQL
 
----
+From the backend repository:
 
-## 🗄️ Database Schema Overview
+```bash
+docker compose up -d
+```
 
-- `users` table:
-  - Stores all user credentials and profile information
-- `roommate_profiles` table:
-  - Stores roommate preference info linked via `user_id`
+This starts MySQL 8.4 and creates a persistent Docker volume. The local development database is named `roomiesync`.
 
-🔗 One-to-One relationship between `users` and `roommate_profiles`.
+The default local credentials are intentionally for local development only. Do not reuse them in a public deployment.
 
----
+If you already have MySQL installed, create a database named `roomiesync` and set `DB_URL`, `DB_USERNAME` and `DB_PASSWORD` in your environment.
 
-## 📌 Setup Instructions
+## 3. Run the backend
 
-1. **Clone the repo**  
-   ```bash
-   git clone https://github.com/yourusername/roomiesync.git
-2. Backend Setup
-Import as a Maven project in Eclipse
+In the backend repository:
 
-Update application.properties with your MySQL credentials
+```bash
+mvn spring-boot:run
+```
 
-Run the Spring Boot app
+The API runs at:
 
-3. Frontend Setup
-bash
-Copy
-Edit
+```
+http://localhost:8080
+```
+
+Spring Boot reads database settings from environment variables. Defaults match the included Docker Compose configuration.
+
+## 4. Run the frontend
+
+In the frontend repository:
+
+```bash
 cd roommate-frontend
 npm install
+```
+
+Copy `.env.example` to `.env` (or create `.env` yourself):
+
+```env
+VITE_API_BASE_URL=http://localhost:8080
+```
+
+Then start Vite:
+
+```bash
 npm run dev
-🧪 Sample Data & Matching Logic
-30+ sample users already added to MySQL database
+```
 
-Matching logic uses:
+Open the local URL printed by Vite, usually `http://localhost:5173`.
 
-Gender
+## 5. Stop the database
 
-Location
+From the backend repository:
 
-(Can be extended to consider lifestyle preferences)
+```bash
+docker compose down
+```
 
-🧪 Testing
-All APIs tested with Postman and frontend integration
+To delete the local database volume as well (this permanently deletes local database data):
 
-Full CRUD verified for users and preferences
+```bash
+docker compose down -v
+```
 
-Matching feature tested with real sample data
+## Configuration notes
 
-🙋‍♀️ About the Creator
-Deepshikha Bhardwaj
-3rd Year B.Tech (CSE)
-Narula Institute of Technology
-Kolkata, India
+- The frontend API base URL is configurable with `VITE_API_BASE_URL`.
+- The backend database URL, username, password and server port can be configured with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` and `PORT`.
+- Hibernate is currently configured with `ddl-auto=update` for local development. Before production deployment, introduce managed schema migrations (for example, Flyway) and review the schema strategy.
+- CORS currently allows the local Vite origin `http://localhost:5173`. Add the actual deployed frontend origin before deploying the frontend publicly.
+- The current application still needs the authentication, password-storage, authorization and API-response security work identified in the project audit. Do not expose this local development build as a public production service until those are addressed.
 
-📬 Contact
-📧 Email: deepshikha.b@example.com
-📱 Phone: +91-XXXXXXXXXX
-📃 License
-This project is created for educational purposes. You may fork or reuse with proper credits.
+## Troubleshooting
 
-“Finding a roommate shouldn’t feel like a gamble — RoomieSync helps you find the right fit.”
-
+- If the backend cannot connect to MySQL, check that Docker is running and that `docker compose ps` reports the database as healthy.
+- If port 3306 is already in use, stop the other MySQL service or change the host-side port mapping in `docker-compose.yml` and update `DB_URL`.
+- If the frontend reports a network or CORS error, verify the backend is running on port 8080 and that `VITE_API_BASE_URL` is correct.
+- Restart Vite after changing a `.env` file.

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import MatchCard from "../components/MatchCard";
 import Navbar from "../components/Navbar";
 import "./Match.css";
@@ -12,7 +13,7 @@ const Match = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
-          `https://roommate-backend-production.up.railway.app/api/users/match/${userId}`
+          `${API_BASE_URL}/api/users/match/${userId}`
         );
         setMatches(response.data);
       } catch (error) {

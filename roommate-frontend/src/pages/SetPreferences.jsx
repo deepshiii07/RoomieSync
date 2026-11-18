@@ -5,14 +5,36 @@ import Navbar from "../components/Navbar";
 import "./SetPreferences.css";
 
 const initialForm = {
-  preferredGender: "",
+  preferredGender: "Any",
   preferredLocation: "",
-  smokerPreference: "Doesn’t matter",
-  drinkerPreference: "Doesn’t matter",
-  religiousPreference: "Doesn’t matter",
+  lifestyleSmoking: "",
+  lifestyleDrinking: "",
+  lifestyleReligion: "",
+  lifestyleSleep: "",
+  lifestyleRoutine: "",
+  lifestyleCleanliness: "",
+  lifestyleSocial: "",
+  lifestyleGuests: "",
+  smokerPreference: "Doesn't matter",
+  drinkerPreference: "Doesn't matter",
+  religiousPreference: "Doesn't matter",
   bedtimePreference: "Flexible",
-  studyTiming: "Flexible"
+  studyTiming: "Flexible",
+  cleanlinessPreference: "Flexible",
+  socialPreference: "Flexible",
+  guestPreference: "Flexible"
 };
+
+const SelectField = ({ label, name, value, onChange, options, hint }) => (
+  <div className="roomie-field">
+    <label htmlFor={name}>{label}</label>
+    <select id={name} name={name} value={value} onChange={onChange}>
+      <option value="">Choose one</option>
+      {options.map((option) => <option key={option} value={option}>{option}</option>)}
+    </select>
+    {hint && <small>{hint}</small>}
+  </div>
+);
 
 const SetPreferences = () => {
   const userId = localStorage.getItem("userId");
@@ -30,12 +52,13 @@ const SetPreferences = () => {
     axios.get(`${API_BASE_URL}/api/preferences/${userId}`)
       .then(({ data }) => setFormData({ ...initialForm, ...data, preferredLocation: data.preferredLocation ?? "" }))
       .catch((error) => {
-        if (error.response?.status !== 404) setMessage("We couldn't load your saved preferences. Please try again.");
+        if (error.response?.status !== 404) setMessage("We couldn't load your saved preferences.");
       })
       .finally(() => setLoading(false));
   }, [userId]);
 
-  const handleChange = ({ target: { name, value } }) => setFormData((current) => ({ ...current, [name]: value }));
+  const handleChange = ({ target: { name, value } }) =>
+    setFormData((current) => ({ ...current, [name]: value }));
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,9 +66,9 @@ const SetPreferences = () => {
     setMessage("");
     try {
       await axios.post(`${API_BASE_URL}/api/preferences/${userId}`, formData);
-      setMessage("Preferences saved.");
+      setMessage("Your profile and roommate preferences have been saved.");
     } catch (error) {
-      setMessage(error.response?.data?.error || "Couldn't save preferences. Please try again.");
+      setMessage(error.response?.data?.error || "Couldn't save your preferences. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -57,32 +80,52 @@ const SetPreferences = () => {
     <>
       <Navbar />
       <main className="preferences-page">
-        <form className="preferences-form" onSubmit={handleSubmit}>
-          <p className="eyebrow">YOUR HOME, YOUR TERMS</p>
-          <h1>Who would you like to live with?</h1>
-          <p className="form-intro">Choose the neighbourhoods you’re considering in your profile city.</p>
+        <form className="preferences-form roomie-preferences-form" onSubmit={handleSubmit}>
+          <p className="eyebrow">A BETTER HOUSEMATE MATCH STARTS HERE</p>
+          <h1>Let's find your kind of home.</h1>
+          <p className="form-intro">Tell us a little about how you live, then what you'd like in a person you share a home with. Your city comes from your personal profile.</p>
 
-          <label htmlFor="preferredLocation">Preferred neighbourhood / area</label>
-          <input id="preferredLocation" name="preferredLocation" type="text" placeholder="e.g. Koramangala, HSR Layout" value={formData.preferredLocation} onChange={handleChange} required />
+          <section className="roomie-form-section">
+            <span className="roomie-section-number">01 / LOCATION & BASICS</span>
+            <h2>Where would you like to live?</h2>
+            <label htmlFor="preferredLocation">Preferred neighbourhood / area</label>
+            <input id="preferredLocation" name="preferredLocation" type="text" placeholder="e.g. Koramangala, HSR Layout" value={formData.preferredLocation} onChange={handleChange} required />
+            <SelectField label="Who would you be comfortable living with?" name="preferredGender" value={formData.preferredGender} onChange={handleChange} options={["Any", "Female", "Male", "Other"]} />
+          </section>
 
-          <label htmlFor="preferredGender">Roommate preference</label>
-          <select id="preferredGender" name="preferredGender" value={formData.preferredGender} onChange={handleChange} required>
-            <option value="">No preference selected</option>
-            <option value="Any">Any gender</option>
-            <option value="Female">Women</option>
-            <option value="Male">Men</option>
-            <option value="Other">Non-binary / other</option>
-          </select>
+          <section className="roomie-form-section">
+            <span className="roomie-section-number">02 / YOUR LIFESTYLE</span>
+            <h2>What are you like at home?</h2>
+            <p className="roomie-section-copy">These answers describe you, not your ideal roommate.</p>
+            <div className="preference-grid">
+              <SelectField label="Do you smoke?" name="lifestyleSmoking" value={formData.lifestyleSmoking} onChange={handleChange} options={["No", "Yes", "Occasionally"]} />
+              <SelectField label="Do you drink?" name="lifestyleDrinking" value={formData.lifestyleDrinking} onChange={handleChange} options={["No", "Yes", "Occasionally"]} />
+              <SelectField label="How would you describe your religious practice?" name="lifestyleReligion" value={formData.lifestyleReligion} onChange={handleChange} options={["Religious", "Not Religious", "Prefer not to say"]} />
+              <SelectField label="Your sleep schedule" name="lifestyleSleep" value={formData.lifestyleSleep} onChange={handleChange} options={["Early Sleeper", "Night Owl", "Flexible"]} />
+              <SelectField label="Your daily routine" name="lifestyleRoutine" value={formData.lifestyleRoutine} onChange={handleChange} options={["Morning", "Daytime", "Evening", "Late Night", "Irregular"]} />
+              <SelectField label="How tidy are you?" name="lifestyleCleanliness" value={formData.lifestyleCleanliness} onChange={handleChange} options={["Very tidy", "Mostly tidy", "Relaxed"]} />
+              <SelectField label="Your social style at home" name="lifestyleSocial" value={formData.lifestyleSocial} onChange={handleChange} options={["Mostly quiet", "Balanced", "Outgoing"]} />
+              <SelectField label="How often do you have guests?" name="lifestyleGuests" value={formData.lifestyleGuests} onChange={handleChange} options={["Rarely", "Sometimes", "Often"]} />
+            </div>
+          </section>
 
-          <div className="preference-grid">
-            <div><label htmlFor="smokerPreference">Smoking</label><select id="smokerPreference" name="smokerPreference" value={formData.smokerPreference} onChange={handleChange}><option>Doesn’t matter</option><option>Yes</option><option>No</option></select></div>
-            <div><label htmlFor="drinkerPreference">Drinking</label><select id="drinkerPreference" name="drinkerPreference" value={formData.drinkerPreference} onChange={handleChange}><option>Doesn’t matter</option><option>Yes</option><option>No</option></select></div>
-            <div><label htmlFor="religiousPreference">Religion</label><select id="religiousPreference" name="religiousPreference" value={formData.religiousPreference} onChange={handleChange}><option>Doesn’t matter</option><option>Religious</option><option>Not Religious</option></select></div>
-            <div><label htmlFor="bedtimePreference">Sleep routine</label><select id="bedtimePreference" name="bedtimePreference" value={formData.bedtimePreference} onChange={handleChange}><option>Flexible</option><option>Early Sleeper</option><option>Night Owl</option></select></div>
-            <div><label htmlFor="studyTiming">Daily routine</label><select id="studyTiming" name="studyTiming" value={formData.studyTiming} onChange={handleChange}><option>Flexible</option><option>Morning</option><option>Evening</option><option>Late Night</option></select></div>
-          </div>
+          <section className="roomie-form-section">
+            <span className="roomie-section-number">03 / YOUR IDEAL ROOMMATE</span>
+            <h2>What matters to you in a housemate?</h2>
+            <p className="roomie-section-copy">We'll compare these preferences with other people's actual lifestyles, in both directions.</p>
+            <div className="preference-grid">
+              <SelectField label="Smoking" name="smokerPreference" value={formData.smokerPreference} onChange={handleChange} options={["Doesn't matter", "No", "Yes", "Occasionally"]} />
+              <SelectField label="Drinking" name="drinkerPreference" value={formData.drinkerPreference} onChange={handleChange} options={["Doesn't matter", "No", "Yes", "Occasionally"]} />
+              <SelectField label="Religious practice" name="religiousPreference" value={formData.religiousPreference} onChange={handleChange} options={["Doesn't matter", "Religious", "Not Religious"]} />
+              <SelectField label="Sleep schedule" name="bedtimePreference" value={formData.bedtimePreference} onChange={handleChange} options={["Flexible", "Early Sleeper", "Night Owl"]} />
+              <SelectField label="Daily routine" name="studyTiming" value={formData.studyTiming} onChange={handleChange} options={["Flexible", "Morning", "Daytime", "Evening", "Late Night", "Irregular"]} />
+              <SelectField label="Cleanliness" name="cleanlinessPreference" value={formData.cleanlinessPreference} onChange={handleChange} options={["Flexible", "Very tidy", "Mostly tidy", "Relaxed"]} />
+              <SelectField label="Social style" name="socialPreference" value={formData.socialPreference} onChange={handleChange} options={["Flexible", "Mostly quiet", "Balanced", "Outgoing"]} />
+              <SelectField label="Guests at home" name="guestPreference" value={formData.guestPreference} onChange={handleChange} options={["Flexible", "Rarely", "Sometimes", "Often"]} />
+            </div>
+          </section>
 
-          <button type="submit" disabled={saving}>{saving ? "Saving…" : "Save preferences"}</button>
+          <button type="submit" disabled={saving}>{saving ? "Saving your profile…" : "Save my profile & preferences"}</button>
           {message && <p role="status" className="message">{message}</p>}
         </form>
       </main>

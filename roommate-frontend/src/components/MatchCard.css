@@ -1,1 +1,8 @@
 .match-card{display:flex;flex-direction:column;justify-content:space-between;min-height:220px;padding:26px;background:#fff;border:1px solid #e5e6de;border-radius:12px;text-align:left;transition:transform .2s,border-color .2s,box-shadow .2s}.match-card:hover{transform:translateY(-3px);border-color:#cbd5c2;box-shadow:0 16px 35px rgba(31,38,29,.07)}.match-details h3{font-family:"DM Serif Display",Georgia,serif;font-size:1.7rem;font-weight:400;color:#283126;margin:9px 0}.match-details p{margin:7px 0;font-size:.88rem;color:#777b70}.contact-btn-wrapper{margin-top:20px;text-align:left}.contact-btn{background:#56694e;color:white;padding:11px 17px;border:0;border-radius:7px;font-size:.83rem;font-weight:650;cursor:pointer;transition:background .2s}.contact-btn:hover{background:#43543d}.contact-info{padding:12px 14px;border-radius:8px;background:#f2f4ef;font-size:.84rem;color:#465240;overflow-wrap:anywhere}.contact-info p{margin:5px 0}
+
+.match-card-topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.match-score{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;background:#e9eee5;color:#465b3e;font-size:.76rem;font-weight:750;white-space:nowrap}
+.match-reasons{margin-top:17px;padding:15px 16px;background:#f7f8f4;border-radius:9px}
+.match-reasons-title{font-size:.76rem!important;font-weight:700!important;color:#4c5d45!important;margin:0 0 9px!important}
+.match-reasons ul{padding-left:17px;margin:0}
+.match-reasons li{font-size:.8rem;line-height:1.5;color:#687064;margin:5px 0}

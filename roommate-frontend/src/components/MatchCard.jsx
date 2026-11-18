@@ -3,32 +3,13 @@ import "./MatchCard.css";
 
 const MatchCard = ({ match }) => {
   const [showContact, setShowContact] = useState(false);
-
   if (!match) return null;
-
-  return (
-    <div className="match-card">
-      <div className="match-details">
-        <h3>{match.name}</h3>
-        <p><strong>Location:</strong> {match.location}</p>
-        <p><strong>Academic Year:</strong> {match.academicYear}</p>
-        <p><strong>Gender:</strong> {match.gender}</p>
-      </div>
-
-      <div className="contact-btn-wrapper">
-        {!showContact ? (
-          <button className="contact-btn" onClick={() => setShowContact(true)}>
-            Contact
-          </button>
-        ) : (
-          <div className="contact-info">
-            <p><strong>Phone:</strong> {match.phone}</p>
-            <p><strong>Email:</strong> {match.email}</p>
-          </div>
-        )}
-      </div>
+  return <article className="match-card">
+    <div className="match-details"><p className="eyebrow">POTENTIAL ROOMMATE</p><h3>{match.name}</h3>
+      <p>{match.location || "City not listed"} · {match.gender || "Gender not listed"}</p>
     </div>
-  );
+    <div className="contact-btn-wrapper">{!showContact ? <button className="contact-btn" onClick={() => setShowContact(true)}>View contact</button> :
+      <div className="contact-info"><p>{match.phone || "Phone not shared"}</p><p>{match.email}</p></div>}</div>
+  </article>;
 };
-
 export default MatchCard;

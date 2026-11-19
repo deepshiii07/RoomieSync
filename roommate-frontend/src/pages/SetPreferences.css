@@ -1,73 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+.preferences-page{min-height:calc(100vh - 72px);background:#f6f5f0;padding:56px 20px 80px;display:flex;justify-content:center;align-items:flex-start;color:#20251f;font-family:Inter,ui-sans-serif,system-ui,sans-serif}.preferences-form{width:100%;max-width:760px;padding:44px 48px;background:#fff;border:1px solid #e7e6de;border-radius:14px;box-shadow:0 18px 55px rgba(31,38,29,.06);box-sizing:border-box}.preferences-form h1{font-family:"DM Serif Display",Georgia,serif;font-size:clamp(2.3rem,4vw,3.3rem);font-weight:400;line-height:1.05;letter-spacing:-.025em;margin:10px 0 12px}.preferences-form .form-intro{color:#777b70;line-height:1.65;margin:0 0 30px}.preferences-form label{display:block;font-size:.8rem;font-weight:650;color:#4a5046;margin:18px 0 8px}.preferences-form input,.preferences-form select{width:100%;height:48px;padding:0 13px;border:1px solid #dedfd7;border-radius:7px;background:#fff;color:#292e27;font:inherit;font-size:.88rem;box-sizing:border-box}.preferences-form input:focus,.preferences-form select:focus{outline:none;border-color:#78866b;box-shadow:0 0 0 4px #e8ede2}.preference-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;margin-top:8px}.preferences-form button{width:100%;margin-top:30px;padding:15px;background:#56694e;color:#fff;border:0;border-radius:7px;font-weight:650;cursor:pointer;transition:background .2s}.preferences-form button:hover{background:#43543d}.preferences-form button:disabled{opacity:.65}.message{color:#526748;margin-top:16px;font-size:.88rem}@media(max-width:600px){.preferences-form{padding:30px 22px}.preference-grid{grid-template-columns:1fr}.preferences-page{padding:28px 14px 56px}}
 
-.preferences-page {
-  background: linear-gradient(to right, #eef2f7, #ffffff);
-  min-height: 100vh;
-  padding: 40px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-}
-
-.preferences-form {
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-}
-
-.preferences-form h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  font-weight: 600;
-  color: #333;
-}
-
-.preferences-form input,
-.preferences-form select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f8f9fa;
-  box-sizing: border-box;
-  appearance: none;
-  height: 44px;
-}
-
-
-.preferences-form button {
-  width: 100%;
-  padding: 12px;
-  background-color: #10b981;
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.preferences-form button:hover {
-  background-color: #059669;
-}
-
-.message {
-  text-align: center;
-  margin-top: 14px;
-  font-size: 14px;
-}
-
-.success {
-  color: #22c55e;
-}
-
-.error {
-  color: #ef4444;
-}
+/* Structured lifestyle + roommate preference form */
+.roomie-preferences-form{max-width:860px;padding:48px 54px}
+.roomie-preferences-form h1{max-width:650px}
+.roomie-form-section{padding:30px 0;border-top:1px solid #eeede7;margin-top:24px}
+.roomie-section-number{display:block;color:#71836a;font-size:.67rem;font-weight:750;letter-spacing:.17em;margin-bottom:10px}
+.roomie-form-section h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:1.75rem;line-height:1.15;margin:0 0 8px;color:#273026}
+.roomie-section-copy{color:#85877e;font-size:.86rem;line-height:1.6;margin:0 0 18px}
+.roomie-field{min-width:0}
+.roomie-field label{display:block;font-size:.78rem;font-weight:650;color:#4a5046;margin:15px 0 8px}
+.roomie-field select{width:100%;height:48px;padding:0 13px;border:1px solid #dedfd7;border-radius:7px;background:#fff;color:#292e27;font:inherit;font-size:.88rem;box-sizing:border-box}
+.roomie-field select:focus{outline:none;border-color:#78866b;box-shadow:0 0 0 4px #e8ede2}
+.roomie-field small{display:block;color:#85877e;font-size:.72rem;margin-top:5px}
+.roomie-preferences-form .preference-grid{gap:10px 24px}
+.roomie-preferences-form>button{margin-top:10px}
+@media(max-width:650px){.roomie-preferences-form{padding:30px 22px}.roomie-preferences-form .preference-grid{grid-template-columns:1fr}.roomie-form-section{padding:24px 0}}

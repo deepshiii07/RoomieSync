@@ -1,96 +1,47 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../api";
 import Navbar from "../components/Navbar";
 import "./MyProfile.css";
 
 const MyProfile = () => {
+  const userId = localStorage.getItem("userId");
+  const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const userId = localStorage.getItem("userId");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await axios.get(
-          `https://roommate-backend-production.up.railway.app/api/preferences/${userId}`
-        );
-        setProfile(response.data);
-      } catch (err) {
-        console.error("Error fetching profile data:", err);
-        setError("Could not load your profile. Please set your preferences.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfileData();
+    if (!userId) { setError("Please log in to view your profile."); setLoading(false); return; }
+    Promise.all([
+      axios.get(`${API_BASE_URL}/api/users/${userId}`),
+      axios.get(`${API_BASE_URL}/api/preferences/${userId}`).catch((e) => e.response?.status === 404 ? null : Promise.reject(e))
+    ]).then(([userResponse, profileResponse]) => {
+      setUser(userResponse.data);
+      setProfile(profileResponse?.data ?? null);
+    }).catch(() => setError("We couldn't load your profile. Please try again.")).finally(() => setLoading(false));
   }, [userId]);
 
-  if (loading) {
-    return (
-      <>
-        <Navbar />
-        <div className="myprofile-container">
-          <h2>Loading your profile...</h2>
-        </div>
-      </>
-    );
-  }
-
-  if (error || !profile || !profile.user) {
-    return (
-      <>
-        <Navbar />
-        <div className="myprofile-container">
-          <h2>{error || "No profile data found. Please set your preferences first."}</h2>
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Navbar />
-      <div className="myprofile-container">
-        <div className="profile-card">
-          <div className="avatar-section">
-            <img
-              src="https://api.dicebear.com/7.x/bottts/svg?seed=user"
-              alt="User Avatar"
-              className="avatar"
-            />
-            <h2>{profile.user.name}</h2>
-          </div>
-
-          <div className="profile-section">
-            <h3>👤 Personal Info</h3>
-            <ul>
-              <li><strong>Name:</strong> {profile.user.name}</li>
-              <li><strong>Email:</strong> {profile.user.email}</li>
-              <li><strong>Phone:</strong> {profile.user.phone}</li>
-              <li><strong>Location:</strong> {profile.user.location}</li>
-              <li><strong>Academic Year:</strong> {profile.user.academicYear}</li>
-            </ul>
-          </div>
-
-          <div className="profile-section">
-            <h3>🎯 Roommate Preferences</h3>
-            <ul>
-              <li><strong>Preferred Gender:</strong> {profile.preferredGender}</li>
-              <li><strong>Preferred Location:</strong> {profile.preferredLocation}</li>
-              <li><strong>Preferred Academic Year:</strong> {profile.preferredAcademicYear}</li>
-              <li><strong>Smoker Preference:</strong> {profile.smokerPreference}</li>
-              <li><strong>Drinker Preference:</strong> {profile.drinkerPreference}</li>
-              <li><strong>Religious Preference:</strong> {profile.religiousPreference}</li>
-              <li><strong>Bedtime Preference:</strong> {profile.bedtimePreference}</li>
-              <li><strong>Study Timing:</strong> {profile.studyTiming}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+  return <><Navbar /><main className="myprofile-container">
+    {loading ? <p>Loading your profile…</p> : error ? <p role="alert">{error}</p> : user && <>
+      <section className="profile-card">
+        <header className="avatar-section"><div className="profile-avatar">{(user.name || "?").trim().charAt(0).toUpperCase()}</div><h1>{user.name}</h1><p>{user.location || "City not added"}</p></header>
+        <section className="profile-section"><h2>Personal details</h2><dl>
+          <div><dt>Email</dt><dd>{user.email}</dd></div><div><dt>Phone</dt><dd>{user.phone || "Not added"}</dd></div>
+          <div><dt>Current city</dt><dd>{user.location || "Not added"}</dd></div>
+          <div><dt>Gender</dt><dd>{user.gender || "Not added"}</dd></div>
+        </dl></section>
+        <section className="profile-section"><h2>Roommate preferences</h2>{profile ? <dl>
+          <div><dt>Preferred area</dt><dd>{profile.preferredLocation || "Not set"}</dd></div>
+          <div><dt>Roommate preference</dt><dd>{profile.preferredGender || "Any"}</dd></div>
+          <div><dt>Smoking</dt><dd>{profile.smokerPreference || "Not set"}</dd></div>
+          <div><dt>Drinking</dt><dd>{profile.drinkerPreference || "Not set"}</dd></div>
+          <div><dt>Religion</dt><dd>{profile.religiousPreference || "Not set"}</dd></div>
+          <div><dt>Sleep routine</dt><dd>{profile.bedtimePreference || "Not set"}</dd></div>
+          <div><dt>Daily routine</dt><dd>{profile.studyTiming || "Not set"}</dd></div>
+        </dl> : <p>You haven't set your roommate preferences yet.</p>}</section>
+      </section>
+    </>}
+  </main></>;
 };
-
 export default MyProfile;
